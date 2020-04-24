@@ -5,7 +5,10 @@ const app = express();
 const MongoClient = require('mongodb');
 const url ='mongodb+srv://ramyabtech19:jaisriram@ecomdb-t8ic5.mongodb.net/test?retryWrites=true&w=majority';
 
+app.set('PORT',process.env.PORT)
+
 app.use(cors());
+
 
 
 app.use(bodyparser.json()) //middle ware 
@@ -71,8 +74,8 @@ app.post('/create', function (req, res) {
 
 })
 
-app.listen(3000, function () {
-    console.log("port is running")
+app.listen(app.get('PORT'), function () {
+    console.log(app.get('PORT'))
 });
 
 function genShortUrl() {
