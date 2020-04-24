@@ -3,9 +3,8 @@ const bodyparser = require('body-parser');
 var cors = require('cors');
 const app = express();
 const MongoClient = require('mongodb');
-const url ='mongodb+srv://ramyabtech19:jaisriram@ecomdb-t8ic5.mongodb.net/test?retryWrites=true&w=majority';
+const url = 'mongodb://localhost:27017';
 
-app.set('PORT',process.env.PORT)
 app.use(cors());
 
 
@@ -32,6 +31,26 @@ app.get('/view', function (req, res) {
     })
 });
 
+app.get('/geturl/:url', function(req,res){
+
+    console.log(req.params.url)
+    MongoClient.connect(url, (err, client) => {
+        if (err) return console.log(err);
+        var db = client.db("urlDB");
+        db.collection('links').findOne({shortURL:req.params.url},function(err,data){
+            if (err) throw err;
+            client.close();
+
+            res.json({
+                message: "success",
+                data:data
+            })
+        })
+
+    })
+
+})
+
 app.post('/create', function (req, res) {
     console.log(req.body);
     console.log(genShortUrl());
@@ -52,8 +71,8 @@ app.post('/create', function (req, res) {
 
 })
 
-app.listen(app.get('PORT'), function () {
-    console.log(app.get('PORT'))
+app.listen(3000, function () {
+    console.log("port is running")
 });
 
 function genShortUrl() {
