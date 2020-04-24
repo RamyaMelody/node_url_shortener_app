@@ -3,8 +3,9 @@ const bodyparser = require('body-parser');
 var cors = require('cors');
 const app = express();
 const MongoClient = require('mongodb');
-const url = 'mongodb://localhost:27017';
+const url ='mongodb+srv://ramyabtech19:jaisriram@ecomdb-t8ic5.mongodb.net/test?retryWrites=true&w=majority';
 
+app.set('PORT',process.env.PORT)
 app.use(cors());
 
 
@@ -51,8 +52,8 @@ app.post('/create', function (req, res) {
 
 })
 
-app.listen(3000, function () {
-    console.log("port is running")
+app.listen(app.get('PORT'), function () {
+    console.log(app.get('PORT'))
 });
 
 function genShortUrl() {
