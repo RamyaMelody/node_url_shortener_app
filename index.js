@@ -42,9 +42,12 @@ app.get('/geturl/:url', function(req,res){
         var db = client.db("urlDB");
         db.collection('links').findOne({shortURL:req.params.url},function(err,data){
             if (err) throw err;
-            client.close();
-
-            res.redirect(data.longURL)
+            db.collection('links').findOneAndUpdate({ shortURL: req.params.url}, { $inc: { clickCount: +1 } }, function (err, data) {
+                if (err) throw err;
+                client.close();
+                console.log(data)
+                res.redirect(data.value.longURL)
+            })
         })
 
     })
