@@ -44,10 +44,7 @@ app.get('/geturl/:url', function(req,res){
             if (err) throw err;
             client.close();
 
-            res.json({
-                message: "success",
-                data:data
-            })
+            res.redirect(data.longURL)
         })
 
     })
