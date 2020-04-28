@@ -36,7 +36,7 @@ app.get('/view', function (req, res) {
 
 app.get('/geturl/:url', function(req,res){
 
-    console.log(req.params.url)
+    //console.log(req.params.url)
     MongoClient.connect(url, (err, client) => {
         if (err) return console.log(err);
         var db = client.db("urlDB");
