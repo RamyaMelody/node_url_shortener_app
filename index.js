@@ -73,6 +73,22 @@ app.post('/create', function (req, res) {
     })
 
 })
+app.delete('/delete/:url', function (req, res) {
+    console.log(req.params.url)
+    MongoClient.connect(url, (err, client) => {
+        if (err) return console.log(err);
+        var db = client.db("urlDB");
+
+        db.collection('links').deleteOne({ shortURL: req.params.url }, function (err, data) {
+            if (err) throw err;
+            client.close();
+            res.json({
+                message: "Deleted Successfully"
+            })
+        })
+    })
+
+})
 
 app.listen(app.get('PORT'), function () {
     console.log(app.get('PORT'))
